@@ -12,12 +12,6 @@ on:
       MEND_URL:
         required: true
         type: string
-      aws-access-key-id:
-        required: false
-        type: string
-      aws-secret-access-key:
-        required: false
-        type: string
       SCA:
         required: true
         type: boolean
