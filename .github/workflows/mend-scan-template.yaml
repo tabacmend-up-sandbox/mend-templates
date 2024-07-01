@@ -82,7 +82,7 @@ jobs:
           then
             echo "No project token found, reports will not be generated"
           else
-            export REPORT_TYPES="${{ input.SCA_Reports }}"
+            export REPORT_TYPES="${{ inputs.SCA_Reports }}"
       
             ### Run SBOM generator ###
             ### Requires admin priviledges ###
