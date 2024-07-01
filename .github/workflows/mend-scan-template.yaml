@@ -30,12 +30,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
-      - name: Debug
-        run: |
-          echo $PWD
-          echo $HOME
-          echo ~
-
       - name: Checkout code
         uses: actions/checkout@v2
 
@@ -84,13 +78,6 @@ jobs:
         if: steps.SAST.outcome == 'success'
         run: echo -e "\033[0;32mNo policy violations found in code scan"
 
-      # - name: Publish SAST Sarif
-      #   id: SAST_Sarif
-      #   if: ${{ inputs.SAST }}
-      #   uses: github/codeql-action/upload-sarif@v3
-        # with:
-        #   sarif_file: code-results.sarif
-
       - name: Generate SCA Reports
         id: SCA_Reports
         run: |
@@ -138,21 +125,9 @@ jobs:
               -d '{"requestType":"getProjectDueDiligenceReport","userKey":"'${MEND_USER_KEY}'","projectToken":"'${WS_PROJECTTOKEN}'"}'
             fi
           fi
-          ls ~/.mend/logs
       - name: Publish Mend Folder
         uses: actions/upload-artifact@v2
         with:
           name: "Mend CLI Logs"
           path: ~/.mend/logs
           retention-days: 5
-
-      # - name: Install dependencies
-      #   run: npm install
-
-      # - name: Run tests
-      #   run: npm test
-
-
-              # uses: actions/setup-node@v2
-        # with:
-        #   node-version: ${{ inputs.node-version }}
