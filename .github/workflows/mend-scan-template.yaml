@@ -81,7 +81,7 @@ jobs:
         if: ${{ inputs.SAST }}
         uses: github/codeql-action/upload-sarif@v3
         with:
-          sarif_file: $HOME/.mend/logs/code-results.sarif
+          sarif_file: code-results.sarif
 
       - name: Publish Mend Folder
         uses: actions/upload-artifact@v2
