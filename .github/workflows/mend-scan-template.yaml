@@ -52,14 +52,14 @@ jobs:
         id: SCA
         if: ${{ inputs.SCA }}
         run: |
-           mend dep -u --fail-policy --non-interactive --export-results dep-results.txt
+           mend dep -u --fail-policy --export-results dep-results.txt
            cp dep-results.txt ~/.mend/logs
 
-      - name: Check SCA results
+      - name: Check SCA results if failed
         if: steps.SCA.outcome == 'failure'
         run: echo "Dependency scan policy violation"
 
-      - name: Check SCA results
+      - name: Check SCA results if succeeded
         if: steps.SCA.outcome == 'success'
         run: echo "No policy violations found in dependencies scan"
 
@@ -75,13 +75,13 @@ jobs:
         if: ${{ inputs.SAST }}
         uses: github/codeql-action/upload-sarif@v3
         with:
-          sarif_file: ~/.mend/logs/code-results.sarif
+          sarif_file: $HOME/.mend/logs/code-results.sarif
 
       - name: Publish Mend Folder
         uses: actions/upload-artifact@v2
         with:
           name: "Mend CLI Logs"
-          path: ~/.mend/logs
+          path: $HOME/.mend/logs
           retention-days: 5
           
       - name: Check SAST results
