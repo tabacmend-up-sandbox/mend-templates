@@ -34,7 +34,10 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Add Mend URL
-        run:  echo "MEND_URL=${{ inputs.MEND_URL }}" >> $GITHUB_ENV
+        run:  |
+          echo "MEND_URL=${{ inputs.MEND_URL }}" >> $GITHUB_ENV
+          echo "MEND_EMAIL"=${{ secrets.MEND_EMAIL }} >> $GITHUB_ENV
+          echo "MEND_USER_KEY"=${{ secrets.MEND_USER_KEY }} >> $GITHUB_ENV
       
       - name: Debug
         run: |
