@@ -29,17 +29,18 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Debug
-        run: |
-          echo ${{ secrets.MEND_EMAIL }}
-          echo ${{ secrets.MEND_EMAIL}}
-          echo $MEND_URL
 
       - name: Checkout code
         uses: actions/checkout@v2
 
       - name: Add Mend URL
         run:  echo "MEND_URL=${{ inputs.MEND_URL }}" >> $GITHUB_ENV
+      
+      - name: Debug
+        run: |
+          echo ${{ secrets.MEND_EMAIL }}
+          echo ${{ secrets.MEND_EMAIL}}
+          echo $MEND_URL
           
       - name: Download Mend CLI
         run: curl https://downloads.mend.io/cli/linux_amd64/mend -o /usr/local/bin/mend && chmod +x /usr/local/bin/mend
