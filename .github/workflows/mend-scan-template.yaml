@@ -3,15 +3,6 @@ name: Mend Scans Template
 on:
   workflow_call:
     inputs:
-      MEND_EMAIL:
-        required: true
-        type: string
-      MEND_USER_KEY:
-        required: true
-        type: string
-      MEND_URL:
-        required: true
-        type: string
       SCA:
         required: true
         type: boolean
