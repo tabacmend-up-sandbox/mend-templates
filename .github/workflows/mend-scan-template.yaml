@@ -18,6 +18,11 @@ on:
       SCA_Reports:
         required: true
         type: string
+    secrets:
+      MEND_EMAIL:
+        required: true
+      MEND_USER_KEY:
+        required: true
       
         
 jobs:
@@ -26,9 +31,16 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+
+      - name: Auth Mend
+        uses: actions/labeler@v4
+        with:
+          MEND_EMAIL: ${{ secrets.MEND_EMAIL }}
+          MEND_USER_KEY: ${{ secrets.MEND_USER_KEY }}
+          
       - name: Download Mend CLI
         run: curl https://downloads.mend.io/cli/linux_amd64/mend -o /usr/local/bin/mend && chmod +x /usr/local/bin/mend
-
+        
       - name: Run Mend SCA Scan
         id: SCA
         if: ${{ inputs.SCA }}
