@@ -3,6 +3,9 @@ name: Mend Scans Template
 on:
   workflow_call:
     inputs:
+      MEND_URL:
+        required: true
+        type: string
       SCA:
         required: true
         type: boolean
