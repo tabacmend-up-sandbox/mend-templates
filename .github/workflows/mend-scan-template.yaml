@@ -3,6 +3,21 @@ name: Mend Scans Template
 on:
   workflow_call:
     inputs:
+      MEND_EMAIL:
+        required: true
+        type: string
+      MEND_USER_KEY:
+        required: true
+        type: string
+      MEND_URL:
+        required: true
+        type: string
+      aws-access-key-id:
+        required: false
+        type: string
+      aws-secret-access-key:
+        required: false
+        type: string
       SCA:
         required: true
         type: boolean
