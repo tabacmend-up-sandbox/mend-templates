@@ -63,11 +63,11 @@ jobs:
 
       - name: Check SCA results if failed
         if: steps.SCA.outcome == 'failure'
-        run: echo "Dependency scan policy violation"
+        run: echo -e "\033[0;31mDependency scan policy violation"
 
       - name: Check SCA results if succeeded
         if: steps.SCA.outcome == 'success'
-        run: echo "No policy violations found in dependencies scan"
+        run: echo -e "\033[0;32mNo policy violations found in dependencies scan"
 
       - name: Run Mend SAST Scan
         id: SAST
@@ -78,11 +78,11 @@ jobs:
       
       - name: Check SAST results
         if: steps.SAST.outcome == 'failure'
-        run: echo "Code scan threshold violation"
+        run: echo -e "\033[0;31mCode scan threshold violation"
 
       - name: Check SAST results
         if: steps.SAST.outcome == 'success'
-        run: echo "No policy violations found in code scan"
+        run: echo -e "\033[0;32mNo policy violations found in code scan"
 
       # - name: Publish SAST Sarif
       #   id: SAST_Sarif
