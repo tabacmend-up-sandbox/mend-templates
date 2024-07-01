@@ -1,0 +1,71 @@
+name: Mend Scans Template
+
+on:
+  workflow_call:
+    inputs:
+      SCA:
+        required: true
+        type: boolean
+      SCA_Reports:
+        required: true
+        type: boolean
+      SAST:
+        required: true
+        type: boolean
+      CN:
+        required: true
+        type: boolean
+      
+        
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download Mend CLI
+        run: curl https://downloads.mend.io/cli/linux_amd64/mend -o /usr/local/bin/mend && chmod +x /usr/local/bin/mend
+
+      - name: Run Mend SCA Scan
+        id: SCA
+        if: ${{ inputs.SCA }}
+        run: |
+           mend dep -u --fail-policy --non-interactive --export-results dep-results.txt
+
+      - name: Check SCA results
+        if: steps.SCA.outcome == 'failure'
+        run: echo "Dependency scan policy violation"
+
+      - name: Check SCA results
+        if: steps.SCA.outcome == 'success'
+        run: echo "No policy violations found in dependencies scan"
+
+      - name: Run Mend SAST Scan
+        id: SAST
+        if: ${{ inputs.SAST }}
+        run: |
+           mend code -r --formats sarif --filename code-results --non-interactive
+
+      - name: Check SAST results
+        if: steps.SAST.outcome == 'failure'
+        run: echo "Code scan threshold violation"
+
+      - name: Check SAST results
+        if: steps.SAST.outcome == 'success'
+        run: echo "No policy violations found in code scan"
+
+      - name: Generate SCA Reports
+        id: SCA
+        if: ${{ inputs.SCA }}
+        run: |
+           mend dep -u --fail-policy --non-interactive --export-results dep-results.txt
+
+      # - name: Install dependencies
+      #   run: npm install
+
+      # - name: Run tests
+      #   run: npm test
+
+
+              # uses: actions/setup-node@v2
+        # with:
+        #   node-version: ${{ inputs.node-version }}
