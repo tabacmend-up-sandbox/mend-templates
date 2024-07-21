@@ -10,7 +10,7 @@ on:
         required: true
         type: boolean
       SCA_Reachability:
-        required: false
+        required: true
         type: boolean
       SAST:
         required: true
@@ -53,7 +53,7 @@ jobs:
         
       - name: Run Mend SCA Scan
         id: SCA
-        if: ${{ inputs.SCA }}
+        if: ${{ inputs.SCA }} && {{ inputs.SCA_Reachability }}
         run: |
            mend dep -u --fail-policy --export-results dep-results.txt
            cp dep-results.txt ~/.mend/logs
