@@ -60,7 +60,7 @@ jobs:
       
       - name: Run Mend SCA Reachability Scan
         id: SCA
-        if: ${{ inputs.SCA && input.Reachability }}
+        if: ${{ inputs.SCA && input.SCA_Reachability }}
         run: |
            mend dep -u -r --fail-policy --export-results dep-results.txt
            cp dep-results.txt ~/.mend/logs
