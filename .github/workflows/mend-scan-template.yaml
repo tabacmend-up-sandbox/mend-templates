@@ -27,7 +27,9 @@ on:
       MEND_USER_KEY:
         required: true
       
-        
+env:
+  MEND_EMAIL: ${{ secrets.MEND_EMAIL }}
+  MEND_USER_KEY: ${{ secrets.MEND_USER_KEY }}
 jobs:
   build:
     runs-on: ubuntu-latest
