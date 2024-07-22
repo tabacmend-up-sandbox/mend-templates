@@ -56,7 +56,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: mend
-          path: ./
+          path: ./mend
         
   mend_sca:
     runs-on: ubuntu-latest
