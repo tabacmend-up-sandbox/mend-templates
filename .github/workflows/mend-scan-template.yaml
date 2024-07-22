@@ -32,19 +32,20 @@ env:
   MEND_USER_KEY: ${{ secrets.MEND_USER_KEY }}
   MEND_URL: ${{ inputs.MEND_URL }}
 jobs:
-  build:
+  checkout:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
   download_mend:
     runs-on: ubuntu-latest
+    needs: [checkout]
     steps:
-      - name: Add Mend URL
-        run:  |
-          echo "MEND_URL=${{ inputs.MEND_URL }}" >> $GITHUB_ENV
-          echo "MEND_EMAIL"=${{ secrets.MEND_EMAIL }} >> $GITHUB_ENV
-          echo "MEND_USER_KEY"=${{ secrets.MEND_USER_KEY }} >> $GITHUB_ENV
+      # - name: Add Mend URL
+      #   run:  |
+      #     echo "MEND_URL=${{ inputs.MEND_URL }}" >> $GITHUB_ENV
+      #     echo "MEND_EMAIL"=${{ secrets.MEND_EMAIL }} >> $GITHUB_ENV
+      #     echo "MEND_USER_KEY"=${{ secrets.MEND_USER_KEY }} >> $GITHUB_ENV
       
       - name: Debug
         run: |
