@@ -50,15 +50,15 @@ jobs:
           echo $MEND_URL
           
       - name: Download Mend CLI
-        id: download_mend
+        # id: download_mend
         run: curl https://downloads.mend.io/cli/linux_amd64/mend -o /usr/local/bin/mend && chmod +x /usr/local/bin/mend
         
   mend_sca:
     runs-on: ubuntu-latest
+    needs: [download_mend]
     steps:
     - name: Run Mend SCA Scan
       id: SCA_Reachability
-      needs: [download_mend]
       if: ${{ inputs.SCA && ! inputs.SCA_Reachability }}
       run: |
          mend dep -u --fail-policy --export-results dep-results.txt
@@ -66,7 +66,6 @@ jobs:
       
     - name: Run Mend SCA Reachability Scan
       id: SCA
-      needs: [download_mend]
       if: ${{ inputs.SCA && inputs.SCA_Reachability }}
       run: |
          mend dep -u -r --fail-policy --export-results dep-results.txt
@@ -130,9 +129,10 @@ jobs:
 
   mend_sast:
     runs-on: ubuntu-latest
+    needs: [download_mend]
     steps:
       - name: Run Mend SAST Scan
-        needs: [download_cli]
+        
         id: SAST
         if: ${{ inputs.SAST }}
         run: |
@@ -149,6 +149,7 @@ jobs:
         
   publish_mend_logs:
     runs-on: ubuntu-latest
+    if: always()
     steps:
       - name: Publish Mend Folder
         uses: actions/upload-artifact@v2
