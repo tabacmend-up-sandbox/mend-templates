@@ -56,7 +56,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: mend
-          path: mend/
+          path: ./
         
   mend_sca:
     runs-on: ubuntu-latest
@@ -66,7 +66,7 @@ jobs:
       uses: actions/download-artifact@v2
       with:
         name: mend
-        path: ./mend
+        path: ./
     - name: Run Mend SCA Scan
       id: SCA_Reachability
       if: ${{ inputs.SCA && ! inputs.SCA_Reachability }}
