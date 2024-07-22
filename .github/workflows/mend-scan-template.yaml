@@ -51,7 +51,7 @@ jobs:
           
       - name: Download Mend CLI
         # id: download_mend
-        run: curl https://downloads.mend.io/cli/linux_amd64/mend -o /usr/local/bin/mend && chmod +x /usr/local/bin/mend
+        run: curl https://downloads.mend.io/cli/linux_amd64/mend -o ./mend && chmod +x ./mend
       - name: Upload Mend CLI
         uses: actions/upload-artifact@v2
         with:
