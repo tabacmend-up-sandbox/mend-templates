@@ -79,26 +79,7 @@ jobs:
     - name: Check SCA results if succeeded
       if: steps.SCA.outcome == 'success' || steps.SCA_Reachability.outcome == 'success'
       run: echo -e "\033[0;32mNo policy violations found in dependencies scan"
-
-  mend_sast:
-  runs-on: ubuntu-latest
-  steps:
-    - name: Run Mend SAST Scan
-      needs: [download_cli]
-      id: SAST
-      if: ${{ inputs.SAST }}
-      run: |
-         mend code -r --formats sarif --filename code-results --non-interactive
-         cp code-results.sarif ~/.mend/logs
-    
-    - name: Check SAST results
-      if: steps.SAST.outcome == 'failure'
-      run: echo -e "\033[0;31mCode scan threshold violation"
-
-    - name: Check SAST results
-      if: steps.SAST.outcome == 'success'
-      run: echo -e "\033[0;32mNo policy violations found in code scan"
-
+      
     - name: Generate SCA Reports
       id: SCA_Reports
       run: |
@@ -146,9 +127,32 @@ jobs:
             -d '{"requestType":"getProjectDueDiligenceReport","userKey":"'${MEND_USER_KEY}'","projectToken":"'${WS_PROJECTTOKEN}'"}'
           fi
         fi
-    - name: Publish Mend Folder
-      uses: actions/upload-artifact@v2
-      with:
-        name: "Mend CLI Logs"
-        path: ~/.mend/logs
-        retention-days: 5
+
+  mend_sast:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run Mend SAST Scan
+        needs: [download_cli]
+        id: SAST
+        if: ${{ inputs.SAST }}
+        run: |
+           mend code -r --formats sarif --filename code-results --non-interactive
+           cp code-results.sarif ~/.mend/logs
+      
+      - name: Check SAST results
+        if: steps.SAST.outcome == 'failure'
+        run: echo -e "\033[0;31mCode scan threshold violation"
+  
+      - name: Check SAST results
+        if: steps.SAST.outcome == 'success'
+        run: echo -e "\033[0;32mNo policy violations found in code scan
+        
+  publish_mend_logs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Publish Mend Folder
+        uses: actions/upload-artifact@v2
+        with:
+          name: "Mend CLI Logs"
+          path: ~/.mend/logs
+          retention-days: 5
