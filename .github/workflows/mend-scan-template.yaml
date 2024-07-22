@@ -30,7 +30,7 @@ on:
 env:
   MEND_EMAIL: ${{ secrets.MEND_EMAIL }}
   MEND_USER_KEY: ${{ secrets.MEND_USER_KEY }}
-  MEND_URL: $ {{ inputs.MEND_URL }}
+  MEND_URL: ${{ inputs.MEND_URL }}
 jobs:
   build:
     runs-on: ubuntu-latest
