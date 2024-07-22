@@ -80,11 +80,11 @@ jobs:
            mend code -r --formats sarif --filename code-results --non-interactive
            cp code-results.sarif ~/.mend/logs
       
-      - name: Check SAST results
+      - name: Check SAST results if failed
         if: steps.SAST.outcome == 'failure'
         run: echo -e "\033[0;31mCode scan threshold violation"
 
-      - name: Check SAST results
+      - name: Check SAST results if succeeded
         if: steps.SAST.outcome == 'success'
         run: echo -e "\033[0;32mNo policy violations found in code scan"
 
