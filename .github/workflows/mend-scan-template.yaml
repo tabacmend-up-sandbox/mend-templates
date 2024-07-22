@@ -52,11 +52,21 @@ jobs:
       - name: Download Mend CLI
         # id: download_mend
         run: curl https://downloads.mend.io/cli/linux_amd64/mend -o /usr/local/bin/mend && chmod +x /usr/local/bin/mend
+      - name: Upload Mend CLI
+        uses: actions/upload-artifact@v2
+        with:
+          name: mend
+          path: mend/
         
   mend_sca:
     runs-on: ubuntu-latest
     needs: [download_mend]
     steps:
+    - name: Download Mend
+      uses: actions/download-artifact@v2
+      with:
+        name: mend
+        path: ./mend
     - name: Run Mend SCA Scan
       id: SCA_Reachability
       if: ${{ inputs.SCA && ! inputs.SCA_Reachability }}
