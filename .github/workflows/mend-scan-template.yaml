@@ -66,19 +66,19 @@ jobs:
       uses: actions/download-artifact@v2
       with:
         name: mend
-        path: ./
+        path: ./ 
     - name: Run Mend SCA Scan
       id: SCA_Reachability
       if: ${{ inputs.SCA && ! inputs.SCA_Reachability }}
       run: |
-         mend dep -u --fail-policy --export-results dep-results.txt
+         ./mend dep -u --fail-policy --export-results dep-results.txt
          cp dep-results.txt ~/.mend/logs
       
     - name: Run Mend SCA Reachability Scan
       id: SCA
       if: ${{ inputs.SCA && inputs.SCA_Reachability }}
       run: |
-         mend dep -u -r --fail-policy --export-results dep-results.txt
+         ./mend dep -u -r --fail-policy --export-results dep-results.txt
          cp dep-results.txt ~/.mend/logs
 
     - name: Check SCA results if failed
