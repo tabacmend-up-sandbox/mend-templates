@@ -29,7 +29,7 @@ on:
       
         
 jobs:
-  build:
+  Mend_Scans:
     runs-on: ubuntu-latest
     steps:
 
