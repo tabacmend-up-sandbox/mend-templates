@@ -52,7 +52,7 @@ jobs:
       #     echo $MEND_URL
 
       - name: Download artifact
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: ${{ inputs.SCAN_Artifacts }}
           
