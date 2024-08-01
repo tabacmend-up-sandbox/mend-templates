@@ -12,9 +12,9 @@ on:
       SCA_Reachability:
         required: false
         type: boolean
-      # SCAN_Artifacts:
-      #   required: true
-      #   type: string
+      CACHE:
+        required: true
+        type: string
       SAST:
         required: true
         type: boolean
@@ -51,9 +51,16 @@ jobs:
       #     echo ${{ secrets.MEND_EMAIL}}
       #     echo $MEND_URL
 
-      - name: Download artifact
-        uses: actions/download-artifact@v4
-      
+      # - name: Download artifact
+      #   uses: actions/download-artifact@v4
+      - uses: actions/cache@v3
+        with:
+          path: | 
+            ~/.npm
+            node_modeules/
+            package-lock.json
+          key: ${{ inputs.CACHE }}
+            
       - name: Debug artifacts download
         run: |
           echo "Available artifacts:"
