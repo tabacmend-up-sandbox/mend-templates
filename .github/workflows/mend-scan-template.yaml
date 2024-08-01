@@ -57,8 +57,10 @@ jobs:
         uses: actions/cache/restore@v3
         id: restore-cache
         with:
-          path: ./
-          key: ${{ inputs.CACHE }} 
+          path: |
+            **/*
+          restore-key: ${{ inputs.CACHE }}
+          fail-on-cache-miss: true
             
       # - name: Download artifact
       #   id: download-artifact
