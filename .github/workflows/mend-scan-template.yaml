@@ -57,15 +57,8 @@ jobs:
         uses: actions/cache/restore@v3
         id: restore-cache
         with:
-            key: ${{ inputs.CACHE }} 
+          key: ${{ inputs.CACHE }} 
             
-      - name: Debug artifacts download
-        run: |
-          echo "Available artifacts:"
-          ls -alh
-          # with:
-          #   name: ${{ inputs.SCAN_Artifacts }}
-
       # - name: Download artifact
       #   id: download-artifact
       #   uses: dawidd6/action-download-artifact@v6
