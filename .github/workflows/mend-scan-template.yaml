@@ -52,14 +52,12 @@ jobs:
       #     echo $MEND_URL
 
       # - name: Download artifact
-      #   uses: actions/download-artifact@v4
-      - uses: actions/cache@v3
+      #   uses: actions/download-artifact
+      - name: Restore Cache
+        uses: actions/cache/restore@v3
+        id: restore-cache
         with:
-          path: | 
-            ~/.npm
-            node_modeules/
-            package-lock.json
-          key: ${{ inputs.CACHE }}
+            key: ${{ inputs.CACHE }} 
             
       - name: Debug artifacts download
         run: |
