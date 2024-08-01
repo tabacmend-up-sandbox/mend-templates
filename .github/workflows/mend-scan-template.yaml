@@ -12,9 +12,9 @@ on:
       SCA_Reachability:
         required: false
         type: boolean
-      SCAN_Artifacts:
-        required: true
-        type: string
+      # SCAN_Artifacts:
+      #   required: true
+      #   type: string
       SAST:
         required: true
         type: boolean
