@@ -53,14 +53,13 @@ jobs:
 
       # - name: Download artifact
       #   uses: actions/download-artifact
-      - name: Restore Cache
-        uses: actions/cache/restore@v3
-        id: restore-cache
+      - name: Restore Node cache
+        uses: actions/cache@v3
         with:
-          path: |
-            **/*
-          restore-key: ${{ inputs.CACHE }}
-          fail-on-cache-miss: true
+          path: ./node_modules
+          key: ${{ inputs.CACHE }}
+          restore-keys: |
+            ${{ inputs.CACHE }}
             
       # - name: Download artifact
       #   id: download-artifact
